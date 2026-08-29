@@ -1,0 +1,29 @@
+# Bundler
+.bundle/
+
+# Ruby
+*.rbc
+Gemfile.lock
+
+# Keep built gem packages in source control
+# Rails
+log/
+tmp/
+/storage/
+/public/assets
+/node_modules/
+/yarn-error.log
+.byebug_history
+
+# Coverage
+coverage/
+
+# IDEs and editors
+*.swp
+*~
+.DS_Store
+.idea/
+.vscode/
+
+# Gem builded
+rails_db_dump-**.gem
