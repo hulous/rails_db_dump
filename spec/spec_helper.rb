@@ -1,4 +1,6 @@
 require "bundler/setup"
+require "active_support/core_ext/object/blank"
+require "active_support/inflector"
 require "rails_db_dump"
 
 RSpec.configure do |config|

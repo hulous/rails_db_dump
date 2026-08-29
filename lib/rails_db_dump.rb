@@ -1,6 +1,17 @@
 require "rails_db_dump/version"
-require "rails_db_dump/engine" if defined?(Rails)
+require "rails_db_dump/runner"
+require "rails_db_dump/restore"
 
 module RailsDbDump
-  class Error < StandardError; end
+  Error = Class.new(StandardError)
+
+  class << self
+    def call(*args, **kwargs)
+      Runner.new(*args, **kwargs).call
+    end
+
+    def restore(*args, **kwargs)
+      Restore.new(*args, **kwargs).call
+    end
+  end
 end

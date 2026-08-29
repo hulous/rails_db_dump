@@ -4,8 +4,9 @@ Gem::Specification.new do |spec|
   spec.authors       = ["hulous"]
   spec.email         = ["fhulous@gmail.com"]
 
-  spec.summary       = "A basic Rails gem skeleton for database dump utilities."
-  spec.description   = "A lightweight Rails engine gem providing a starting point for database dump and Rails extension functionality."
+  spec.summary       = "Database dump helper service"
+  spec.description   = "Provides a reusable PostgreSQL database dump service for Rails applications."
+
   spec.homepage      = "https://github.com/hulous/rails_db_dump"
   spec.license       = "MIT"
 
@@ -17,8 +18,9 @@ Gem::Specification.new do |spec|
   spec.files         = Dir.glob("**/*").reject { |f| f.start_with?(".git/") || f =~ %r{\A(?:tmp|log|vendor)/} }
   spec.require_paths = ["lib"]
 
-  spec.add_dependency "rails", ">= 6.0"
-
   spec.add_development_dependency "bundler", ">= 2.0"
   spec.add_development_dependency "rspec", ">= 3.0"
+
+  spec.add_runtime_dependency "rails", ">= 7.0"
+  spec.add_runtime_dependency "pg", ">= 1.0"
 end
