@@ -1,3 +1,5 @@
+require_relative "lib/rails_db_dump/version"
+
 Gem::Specification.new do |spec|
   spec.name          = "rails_db_dump"
   spec.version       = RailsDbDump::VERSION
