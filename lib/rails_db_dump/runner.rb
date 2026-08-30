@@ -6,26 +6,27 @@ module RailsDbDump
     private_constant :KEEP_DUMP_COUNT
 
     def initialize(file: nil, config: nil, application_name: nil)
-      @file = file.presence || default_file(application_name)
+      @file = file.nil? || file.to_s.strip.empty? ? nil : file
       @config = config || ActiveRecord::Base.connection_db_config.configuration_hash
+      @application_name = application_name
     end
 
     def call
-      FileUtils.mkdir_p(File.dirname(file))
+      FileUtils.mkdir_p(File.dirname(file)) if file
 
       with_pgpassword do
-        success = Kernel.system(*build_command, out: file)
+        success = Kernel.system(*build_command, out: file || STDOUT)
         raise Error, "DB dump failed" unless success
       end
 
-      cleanup_old_dumps
+      cleanup_old_dumps if file
 
       file
     end
 
     private
 
-    attr_reader :file, :config
+    attr_reader :file, :config, :application_name
 
     def cleanup_old_dumps
       backup_dir = File.dirname(file)

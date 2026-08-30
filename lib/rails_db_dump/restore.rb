@@ -4,8 +4,9 @@ require "rake"
 module RailsDbDump
   class Restore
     def initialize(file: nil, config: nil, application_name: nil)
-      @file = file.presence || default_file(application_name)
+      @file = file.nil? || file.to_s.strip.empty? ? nil : file
       @config = config || ActiveRecord::Base.connection_db_config.configuration_hash
+      @application_name = application_name
     end
 
     def call
@@ -21,7 +22,7 @@ module RailsDbDump
 
     private
 
-    attr_reader :file, :config
+    attr_reader :file, :config, :application_name
 
     def recreate_database
       Rake::Task["db:drop"].invoke
@@ -56,7 +57,7 @@ module RailsDbDump
         "--no-owner",
         "--no-acl",
         "--dbname", config[:database].to_s,
-        file
+        file || "-"
       ]
     end
   end

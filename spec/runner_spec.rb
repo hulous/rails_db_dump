@@ -42,8 +42,13 @@ RSpec.describe RailsDbDump::Runner do
   it "sets PGPASSWORD during dump" do
     runner = described_class.new(file: "db/backups/test.dump", config: config)
 
+    allow(Kernel).to receive(:system) do
+      expect(ENV["PGPASSWORD"]).to eq("secret")
+      true
+    end
+
     expect { runner.call }.not_to raise_error
-    expect(ENV["PGPASSWORD"]).to eq("secret")
+    expect(ENV).not_to have_key("PGPASSWORD")
   ensure
     ENV.delete("PGPASSWORD")
   end
@@ -61,6 +66,6 @@ RSpec.describe RailsDbDump::Runner do
 
     described_class.new(file: "db/backups/test.dump", config: config).call
 
-    expect(File).to have_received(:delete).with("db/backups/keep4.dump")
+    expect(File).to have_received(:delete).with("db/backups/keep1.dump")
   end
 end

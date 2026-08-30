@@ -17,7 +17,11 @@ Gem::Specification.new do |spec|
   spec.metadata['allowed_push_host'] = 'https://rubygems.pkg.github.com'
   spec.metadata['source_code_uri'] = 'https://github.com/hulous/rails_db_dump'
 
-  spec.files         = Dir.glob("**/*").reject { |f| f.start_with?(".git/") || f =~ %r{\A(?:tmp|log|vendor)/} }
+  spec.files         = Dir.glob("**/*").reject do |f|
+    f.start_with?(".git/") ||
+      f =~ %r{\A(?:tmp|log|vendor)/} ||
+      f =~ /\.gem\z/
+  end
   spec.require_paths = ["lib"]
 
   spec.add_development_dependency "bundler", ">= 2.0"

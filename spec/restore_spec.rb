@@ -36,8 +36,13 @@ RSpec.describe RailsDbDump::Restore do
   it "sets PGPASSWORD during restore" do
     restorer = described_class.new(file: "db/backups/test.dump", config: config)
 
+    allow(Kernel).to receive(:system) do
+      expect(ENV["PGPASSWORD"]).to eq("secret")
+      true
+    end
+
     expect { restorer.call }.not_to raise_error
-    expect(ENV["PGPASSWORD"]).to eq("secret")
+    expect(ENV).not_to have_key("PGPASSWORD")
   ensure
     ENV.delete("PGPASSWORD")
   end
