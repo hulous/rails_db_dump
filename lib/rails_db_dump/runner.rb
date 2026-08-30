@@ -1,7 +1,11 @@
 require "fileutils"
 
+require "rails_db_dump/callable"
+
 module RailsDbDump
   class Runner
+    include Callable
+
     KEEP_DUMP_COUNT = 3
     private_constant :KEEP_DUMP_COUNT
 

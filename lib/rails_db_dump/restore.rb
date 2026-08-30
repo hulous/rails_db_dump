@@ -1,8 +1,12 @@
 require "fileutils"
 require "rake"
 
+require "rails_db_dump/callable"
+
 module RailsDbDump
   class Restore
+    include Callable
+
     def initialize(file: nil, config: nil, application_name: nil)
       @file = file.nil? || file.to_s.strip.empty? ? nil : file
       @config = config || ActiveRecord::Base.connection_db_config.configuration_hash

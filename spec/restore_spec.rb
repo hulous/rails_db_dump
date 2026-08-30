@@ -46,4 +46,11 @@ RSpec.describe RailsDbDump::Restore do
   ensure
     ENV.delete("PGPASSWORD")
   end
+
+  it "delegates .call to a new instance" do
+    expect(described_class).to receive(:new).with(file: "db/backups/test.dump", config: config).and_call_original
+    expect_any_instance_of(described_class).to receive(:call).and_return("db/backups/test.dump")
+
+    expect(described_class.call(file: "db/backups/test.dump", config: config)).to eq("db/backups/test.dump")
+  end
 end
